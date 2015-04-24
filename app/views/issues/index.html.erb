@@ -1,5 +1,17 @@
 <%@issues.each do  |issue|%>
-	<%if can? :read, issue%>
-	<%=issue.title%> happen at <%=Equipment.find(issue.equipment_id).room.name%> reported by <%=User.find(issue.user_id).email%><br>
+		<%if can? :read, issue%>
+			[<%=issue.state%>] <%=issue.title%> happen at <%=Equipment.find(issue.equipment_id).room.name%> reported by <%=User.find(issue.user_id).email%>
+		<%if can? :manage, issue%>
+			<%=link_to "delete this issue", issue_path(issue.id), :method=>"delete"%>
+			<%=form_for :new_state, :url=>{:controller=>:issues, :action=>:close, :id=>issue.id} do |f|%>
+			<%=f.select :state, [:open,:closed,:proceeding]%>
+			<%=f.submit "change issue status"%>
+		<%end%>
+		<%end%>
+		<%end%><br>
+
 	<%end%>
+<%if can? :create, Issue%>
+<br><%=link_to "create issue", new_issue_path%>
 <%end%>
+

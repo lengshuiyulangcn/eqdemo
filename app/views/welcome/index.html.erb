@@ -1,4 +1,8 @@
 hello <%=current_user.email%> you are <%=current_user.role%>
-
+<%if can? :create, Issue%>
 <br><%=link_to "create issue", new_issue_path%>
+<%end%>
+<%if can? :read, Issue%>
+	<%=link_to "issue list", issues_path%>
+<%end%>
 <br><%=link_to "Logout",  destroy_user_session_path, :method=>"delete"%>

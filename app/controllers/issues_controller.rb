@@ -14,16 +14,26 @@ class IssuesController < ApplicationController
 	 issue.user_id=current_user.id
 	 issue.title=issue_param[:title]
 	 issue.content=issue_param[:content]
-	 if issue.save
+	 issue.state=:open
+	 if can? :create, issue 
+	 issue.save
 	 redirect_to issues_path
 	 else
 	 redirect_to :back
 	 end
   end
   def edit
- 
+	  
   end
   def update
+  end
+  def close
+  	issue=Issue.find(params.permit(:id)[:id])
+	if can? :manage, issue
+		issue.state=params[:new_state][:state].to_sym
+		issue.save
+		redirect_to :back
+	end
   end
   def destroy
 	  @issue=Issue.find(params.permit(:id)[:id])

@@ -35,7 +35,8 @@ Rails.application.routes.draw do
 resources :equipments
 resources :teams
 resources :issues 
-  # Example resource route with more complex sub-resources:
+post 'close'=>'issues#close', as: 'close_issue'
+# Example resource route with more complex sub-resources:
   #   resources :products do
   #     resources :comments
   #     resources :sales do
