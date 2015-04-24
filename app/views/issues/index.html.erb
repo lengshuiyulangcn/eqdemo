@@ -1,0 +1,5 @@
+<%@issues.each do  |issue|%>
+	<%if can? :read, issue%>
+	<%=issue.title%> happen at <%=Equipment.find(issue.equipment_id).room.name%> reported by <%=User.find(issue.user_id).email%><br>
+	<%end%>
+<%end%>

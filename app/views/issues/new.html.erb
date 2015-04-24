@@ -1,0 +1,13 @@
+<%= form_for :equiplist, :url=>{:controller=>:issues, :action=>:create}  do |f| %>
+	<h4>Enter an issue title:</h4>
+	<%=f.text_field :title%><br>
+	<h4>Enter your issue:</h4>
+	<%=f.text_area :content%><br>
+  <%= f.select :room_id, options_for_select(@rooms.collect { |room|
+    [room.name, room.id] }, 1), {}, { id: 'rooms_select' } %>
+  <%= f.select :equipment_id, options_for_select(@rooms.first.equipments.collect { |equipment|
+    [equipment.equipment_name, equipment.id] }, 0), {}, { id: 'equipments_select' } %>
+<br>
+<br>
+  <%= f.submit "Create issue" %>
+<% end %>
